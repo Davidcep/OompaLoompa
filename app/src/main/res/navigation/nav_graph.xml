@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/oompasFragment">
 
+    <fragment
+        android:id="@+id/oompasFragment"
+        android:name="com.example.ompaaloompa.ui.fragments.OompasFragment"
+        android:label="fragment_oompas"
+        tools:layout="@layout/fragment_oompas" >
+        <action
+            android:id="@+id/action_oompasFragment_to_oompaInfoFragment"
+            app:destination="@id/oompaInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/oompaInfoFragment"
+        android:name="com.example.ompaaloompa.ui.fragments.OompaInfoFragment"
+        android:label="oompa_info_fragment"
+        tools:layout="@layout/oompa_info_fragment" />
 </navigation>

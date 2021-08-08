@@ -12,11 +12,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, OompasFragment.newInstance())
-                    .commitNow()
-            setSupportActionBar(findViewById(R.id.custom_toolbar))
-        }
+        setSupportActionBar(findViewById(R.id.custom_toolbar))
     }
 }
