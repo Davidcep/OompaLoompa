@@ -58,8 +58,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginLeft="32dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="8dp"
                     android:text="@{oompa.first_name}"
+                    android:textSize="@dimen/text_size_16sp"
                     app:layout_constraintBottom_toTopOf="@+id/tv_item_profession"
                     app:layout_constraintStart_toEndOf="@+id/iv_item_oompa"
                     app:layout_constraintTop_toTopOf="@+id/iv_item_oompa" />
@@ -70,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:text="@{oompa.last_name}"
                     app:layout_constraintStart_toEndOf="@+id/tv_item_name"
                     app:layout_constraintTop_toTopOf="@+id/tv_item_name" />
@@ -80,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginLeft="32dp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:text="@{oompa.profession}"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_item_oompa"
                     app:layout_constraintStart_toEndOf="@+id/iv_item_oompa"
