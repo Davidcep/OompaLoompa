@@ -3,6 +3,8 @@
     <color name="color_primary">#71855B</color>
     <color name="color_fragment">#71855B</color>
     <color name="color_card">#819769</color>
+    <color name="color_et_text">#FF424242</color>
+    <color name="color_et_hint">#7A7A7A</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

@@ -84,7 +84,7 @@ class OompasFragment : Fragment() {
                     Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
 
                 Resource.Status.LOADING -> {
-                    //Do a progress bar
+                    //Con tiempo podría haber hecho una ProgressBar
                 }
             }
         })
