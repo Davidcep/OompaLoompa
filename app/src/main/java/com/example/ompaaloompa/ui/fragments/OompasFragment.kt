@@ -38,13 +38,14 @@ class OompasFragment : Fragment() {
         setHasOptionsMenu(true)
         viewModel = ViewModelProvider(this).get(OompasViewModel::class.java)
         recyclerView = view.findViewById(R.id.rv_main_oompas)
-
-        /*
         editTextSearch = view.findViewById(R.id.et_main_search)
         editTextSearch.doAfterTextChanged { it ->
-            searchByName(it.toString())
+            if(it.toString() == ""){
+                bindData()
+            } else {
+                searchByName(it.toString())
+            }
         }
-         */
         bindViews()
     }
 
@@ -52,7 +53,6 @@ class OompasFragment : Fragment() {
         inflater.inflate(R.menu.custom_menu, menu)
     }
 
-    /*
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorite -> {
@@ -66,7 +66,6 @@ class OompasFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-     */
 
     private fun bindViews() {
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -80,28 +79,21 @@ class OompasFragment : Fragment() {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     adapter.submitList(it.data)
-
-                    //progress_bar.visibility = View.GONE
-                    //if (!it.data.isNullOrEmpty()) adapter.setItems(ArrayList(it.data))
                 }
                 Resource.Status.ERROR ->
                     Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
 
-                //Resource.Status.LOADING ->
-                    //progress_bar.visibility = View.VISIBLE
+                Resource.Status.LOADING -> {
+                    //Do a progress bar
+                }
             }
         })
     }
 
-    /*
     private fun searchByName(name: String) {
         viewModel.searchOompa(name).observe(viewLifecycleOwner, Observer {
-            adapter.oompas.clear()
-            adapter.oompas = it as MutableList<Oompa>
-            adapter.notifyDataSetChanged()
+            adapter.submitList(it)
         })
     }
-
-     */
 
 }
