@@ -14,8 +14,8 @@ class OompasViewModel @Inject constructor(
 ) : ViewModel() {
 
     companion object{
-        //Por falta de tiempo no puedo jugar con el número de páginas en la app, así que recojo los
-        // datos de la primera
+        //Por falta de tiempo no puedo jugar con el número de páginas en la app
+        //(Podría montar algo como un ViewPager), así que recojo solo los datos de la primera
         const val PAGE_NUMBER = 1
     }
 

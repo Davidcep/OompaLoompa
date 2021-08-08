@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +45,12 @@ class OompaAdapter :
         val tvLastName: TextView = view.findViewById(R.id.tv_item_lastname)
         val tvProfession: TextView = view.findViewById(R.id.tv_item_profession)
         val ivItem: ImageView = view.findViewById(R.id.iv_item_oompa)
+
+        init {
+            view.setOnClickListener { view ->
+                Navigation.findNavController(view).navigate(R.id.action_oompasFragment_to_oompaInfoFragment)
+            }
+        }
 
         fun bind (oompa: Oompa) {
             tvName.text = oompa.first_name

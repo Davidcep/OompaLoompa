@@ -28,6 +28,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             app:cardBackgroundColor="@color/color_card"
+            android:onClick="@{clickListener}"
             app:cardCornerRadius="@dimen/card_6dp"
             app:cardElevation="@dimen/card_6dp"
             app:layout_constraintBottom_toBottomOf="parent"
