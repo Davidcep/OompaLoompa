@@ -3,6 +3,7 @@ package com.example.ompaaloompa.ui.fragments
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -23,6 +24,7 @@ class OompasFragment : Fragment() {
 
     private lateinit var viewModel: OompasViewModel
     private lateinit var recyclerView: RecyclerView
+    private lateinit var editTextSearch: EditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -31,9 +33,29 @@ class OompasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         viewModel = ViewModelProvider(this).get(OompasViewModel::class.java)
         recyclerView = view.findViewById(R.id.rv_main_oompas)
+        editTextSearch = view.findViewById(R.id.et_main_search)
         bindViews()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.custom_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_favorite -> {
+                if(editTextSearch.visibility == View.VISIBLE) {
+                    editTextSearch.visibility = View.GONE
+                } else {
+                    editTextSearch.visibility = View.VISIBLE
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun bindViews() {

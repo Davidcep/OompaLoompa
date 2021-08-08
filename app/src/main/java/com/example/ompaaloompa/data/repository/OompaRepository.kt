@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.example.ompaaloompa.data.local.OompaDao
+import com.example.ompaaloompa.data.models.Oompa
 import com.example.ompaaloompa.data.remote.OompaDataSource
 import com.example.ompaaloompa.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,10 @@ class OompaRepository @Inject constructor(
         networkCall = { oompaDataSource.getOompas(page) },
         saveCallResult = { it -> oompaDao.insertAll(it.results) }
     )
+
+    fun getOompaByName(name: String): LiveData<List<Oompa>> {
+        return oompaDao.getOompaByName(name);
+    }
 
     private fun <T, A> performGetOperation(databaseQuery: () -> LiveData<T>,
                                    networkCall: suspend () -> Resource<A>,

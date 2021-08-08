@@ -21,4 +21,7 @@ class OompasViewModel @Inject constructor(
 
     val oompas: LiveData<Resource<List<Oompa>>> = repository.getOompas(PAGE_NUMBER)
 
+    fun searchOompa(name: String): LiveData<List<Oompa>> {
+        return repository.getOompaByName(name)
+    }
 }

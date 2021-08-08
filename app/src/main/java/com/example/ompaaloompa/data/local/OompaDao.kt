@@ -17,5 +17,5 @@ interface OompaDao {
     suspend fun insertAll(characters: List<Oompa>)
 
     @Query("SELECT * FROM oompas WHERE first_name LIKE :name")
-    fun getOompaByName(name: String): LiveData<Oompa>
+    fun getOompaByName(name: String): LiveData<List<Oompa>>
 }
