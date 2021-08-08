@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.ompaaloompa.R
 import com.example.ompaaloompa.data.models.Oompa
-import java.lang.Exception
 
-class OompaAdapter(var oompas: MutableList<Oompa>): RecyclerView.Adapter<OompaAdapter.ViewHolder>() {
+class OompaAdapter :
+    ListAdapter<Oompa, OompaAdapter.ViewHolder>( OompaDiffCallback() ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,21 +23,16 @@ class OompaAdapter(var oompas: MutableList<Oompa>): RecyclerView.Adapter<OompaAd
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return oompas.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val oompa = oompas.get(position)
-        holder.tvName.text = oompa.first_name
-        holder.tvLastName.text = oompa.last_name
-        holder.tvProfession.text = oompa.profession
+        val oompa = getItem(position)
+        holder.bind(oompa)
 
         try {
             Glide
                 .with(holder.itemView)
                 .load(oompa.image)
                 .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(holder.ivItem)
         } catch (ex: Exception) {
             Log.e("ImageGlide Error", ex.message.toString())
@@ -42,17 +40,28 @@ class OompaAdapter(var oompas: MutableList<Oompa>): RecyclerView.Adapter<OompaAd
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val tvName: TextView
-        val tvLastName: TextView
-        val tvProfession: TextView
-        val ivItem: ImageView
+        val tvName: TextView = view.findViewById(R.id.tv_item_name)
+        val tvLastName: TextView = view.findViewById(R.id.tv_item_lastname)
+        val tvProfession: TextView = view.findViewById(R.id.tv_item_profession)
+        val ivItem: ImageView = view.findViewById(R.id.iv_item_oompa)
 
-        init {
-            tvName = view.findViewById(R.id.tv_item_name)
-            tvLastName = view.findViewById(R.id.tv_item_lastname)
-            tvProfession = view.findViewById(R.id.tv_item_profession)
-            ivItem = view.findViewById(R.id.iv_item_oompa)
+        fun bind (oompa: Oompa) {
+            tvName.text = oompa.first_name
+            tvLastName.text = oompa.last_name
+            tvProfession.text = oompa.profession
         }
+    }
+
+}
+
+private class OompaDiffCallback : DiffUtil.ItemCallback<Oompa>() {
+
+    override fun areItemsTheSame(oldItem: Oompa, newItem: Oompa): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Oompa, newItem: Oompa): Boolean {
+        return oldItem == newItem
     }
 
 }

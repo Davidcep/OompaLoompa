@@ -1,12 +1,13 @@
 package com.example.ompaaloompa.ui.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ompaaloompa.R
@@ -25,6 +26,7 @@ class OompasFragment : Fragment() {
     private lateinit var viewModel: OompasViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var editTextSearch: EditText
+    private lateinit var adapter: OompaAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -36,7 +38,13 @@ class OompasFragment : Fragment() {
         setHasOptionsMenu(true)
         viewModel = ViewModelProvider(this).get(OompasViewModel::class.java)
         recyclerView = view.findViewById(R.id.rv_main_oompas)
+
+        /*
         editTextSearch = view.findViewById(R.id.et_main_search)
+        editTextSearch.doAfterTextChanged { it ->
+            searchByName(it.toString())
+        }
+         */
         bindViews()
     }
 
@@ -44,6 +52,7 @@ class OompasFragment : Fragment() {
         inflater.inflate(R.menu.custom_menu, menu)
     }
 
+    /*
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorite -> {
@@ -57,10 +66,12 @@ class OompasFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+     */
 
     private fun bindViews() {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = OompaAdapter(mutableListOf())
+        adapter = OompaAdapter()
+        recyclerView.adapter = adapter
         bindData()
     }
 
@@ -68,10 +79,8 @@ class OompasFragment : Fragment() {
         viewModel.oompas.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
-                    val adapter = recyclerView.adapter as OompaAdapter
-                    adapter.oompas.clear()
-                    adapter.oompas = it.data as MutableList<Oompa>
-                    adapter.notifyDataSetChanged()
+                    adapter.submitList(it.data)
+
                     //progress_bar.visibility = View.GONE
                     //if (!it.data.isNullOrEmpty()) adapter.setItems(ArrayList(it.data))
                 }
@@ -83,4 +92,16 @@ class OompasFragment : Fragment() {
             }
         })
     }
+
+    /*
+    private fun searchByName(name: String) {
+        viewModel.searchOompa(name).observe(viewLifecycleOwner, Observer {
+            adapter.oompas.clear()
+            adapter.oompas = it as MutableList<Oompa>
+            adapter.notifyDataSetChanged()
+        })
+    }
+
+     */
+
 }
