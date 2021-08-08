@@ -1,6 +1,5 @@
 package com.example.ompaaloompa.ui.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,7 +19,13 @@ class OompaInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.oompa_info_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_oompa_info, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.let{
+            val id = requireArguments().getInt("id");
+        }
+    }
 }

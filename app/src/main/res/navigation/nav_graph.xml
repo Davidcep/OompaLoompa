@@ -18,5 +18,5 @@
         android:id="@+id/oompaInfoFragment"
         android:name="com.example.ompaaloompa.ui.fragments.OompaInfoFragment"
         android:label="oompa_info_fragment"
-        tools:layout="@layout/oompa_info_fragment" />
+        tools:layout="@layout/fragment_oompa_info" />
 </navigation>

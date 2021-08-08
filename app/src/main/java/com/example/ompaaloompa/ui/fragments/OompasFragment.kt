@@ -39,6 +39,22 @@ class OompasFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(OompasViewModel::class.java)
         recyclerView = view.findViewById(R.id.rv_main_oompas)
         editTextSearch = view.findViewById(R.id.et_main_search)
+        bindViews()
+    }
+
+    private fun bindViews() {
+        bindAdapters()
+        bindEditText()
+    }
+
+    private fun bindAdapters(){
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = OompaAdapter()
+        recyclerView.adapter = adapter
+        bindData()
+    }
+
+    private fun bindEditText() {
         editTextSearch.doAfterTextChanged { it ->
             if(it.toString() == ""){
                 bindData()
@@ -46,32 +62,6 @@ class OompasFragment : Fragment() {
                 searchByName(it.toString())
             }
         }
-        bindViews()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.custom_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_favorite -> {
-                if(editTextSearch.visibility == View.VISIBLE) {
-                    editTextSearch.visibility = View.GONE
-                } else {
-                    editTextSearch.visibility = View.VISIBLE
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun bindViews() {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = OompaAdapter()
-        recyclerView.adapter = adapter
-        bindData()
     }
 
     private fun bindData() {
@@ -94,6 +84,21 @@ class OompasFragment : Fragment() {
         viewModel.searchOompa(name).observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.custom_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_favorite -> {
+                if(editTextSearch.visibility == View.VISIBLE) editTextSearch.visibility = View.GONE
+                else editTextSearch.visibility = View.VISIBLE
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

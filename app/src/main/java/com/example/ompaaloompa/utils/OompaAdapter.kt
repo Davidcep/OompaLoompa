@@ -1,5 +1,6 @@
 package com.example.ompaaloompa.utils
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -45,17 +46,18 @@ class OompaAdapter :
         val tvLastName: TextView = view.findViewById(R.id.tv_item_lastname)
         val tvProfession: TextView = view.findViewById(R.id.tv_item_profession)
         val ivItem: ImageView = view.findViewById(R.id.iv_item_oompa)
-
-        init {
-            view.setOnClickListener { view ->
-                Navigation.findNavController(view).navigate(R.id.action_oompasFragment_to_oompaInfoFragment)
-            }
-        }
+        val view = view;
 
         fun bind (oompa: Oompa) {
             tvName.text = oompa.first_name
             tvLastName.text = oompa.last_name
             tvProfession.text = oompa.profession
+
+            view.setOnClickListener { view ->
+                val bundle = Bundle()
+                bundle.putInt("id", oompa.id)
+                Navigation.findNavController(view).navigate(R.id.action_oompasFragment_to_oompaInfoFragment)
+            }
         }
     }
 
