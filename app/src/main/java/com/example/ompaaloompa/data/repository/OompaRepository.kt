@@ -16,13 +16,17 @@ class OompaRepository @Inject constructor(
 ) {
 
     fun getOompas(page: Int) = performGetOperation(
-        databaseQuery = { oompaDao.getAllCharacters() },
+        databaseQuery = { oompaDao.getAllOompas() },
         networkCall = { oompaDataSource.getOompas(page) },
         saveCallResult = { it -> oompaDao.insertAll(it.results) }
     )
 
     fun getOompaByName(name: String): LiveData<List<Oompa>> {
         return oompaDao.getOompaByName(name);
+    }
+
+    fun getOompaById(id: Int): LiveData<Oompa> {
+        return oompaDao.getOompaById(id);
     }
 
     private fun <T, A> performGetOperation(databaseQuery: () -> LiveData<T>,

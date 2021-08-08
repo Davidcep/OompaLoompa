@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.example.ompaaloompa.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OompaInfoFragment : Fragment() {
 
     companion object {
@@ -24,8 +27,7 @@ class OompaInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let{
-            val id = requireArguments().getInt("id");
-        }
+        viewModel = ViewModelProvider(this).get(OompaInfoViewModel::class.java)
+        val idOompa = arguments?.let{ requireArguments().getInt("id") }
     }
 }
