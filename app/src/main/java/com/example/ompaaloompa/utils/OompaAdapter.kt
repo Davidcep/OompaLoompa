@@ -42,6 +42,10 @@ class OompaAdapter :
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        /*
+        Tuve un problema con el bindeo de datos en Adapter. No se me refrescaba la view, así que
+        volví a la forma clásica. No tuve tiempo de investigarlo a fondo...
+         */
         val tvName: TextView = view.findViewById(R.id.tv_item_name)
         val tvLastName: TextView = view.findViewById(R.id.tv_item_lastname)
         val tvProfession: TextView = view.findViewById(R.id.tv_item_profession)
@@ -56,7 +60,7 @@ class OompaAdapter :
             view.setOnClickListener { view ->
                 val bundle = Bundle()
                 bundle.putInt("id", oompa.id)
-                Navigation.findNavController(view).navigate(R.id.action_oompasFragment_to_oompaInfoFragment)
+                Navigation.findNavController(view).navigate(R.id.action_oompasFragment_to_oompaInfoFragment, bundle)
             }
         }
     }
