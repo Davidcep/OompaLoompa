@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.ompaaloompa.R
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OompaInfoFragment : Fragment() {
 
-    private lateinit var viewModel: OompaInfoViewModel
+    private val viewModel: OompaInfoViewModel by viewModels()
     private lateinit var binding: FragmentOompaInfoBinding
 
     override fun onCreateView(
@@ -30,7 +31,6 @@ class OompaInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(OompaInfoViewModel::class.java)
         val id = arguments?.let{ requireArguments().getInt("id") }
         if(id != null) bindData(id)
     }

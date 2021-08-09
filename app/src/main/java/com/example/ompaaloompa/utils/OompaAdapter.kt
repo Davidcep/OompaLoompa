@@ -44,7 +44,7 @@ class OompaAdapter :
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         /*
         Tuve un problema con el bindeo de datos en Adapter. No se me refrescaba la view, así que
-        volví a la forma clásica. No tuve tiempo de investigarlo a fondo...
+        volví a la forma clásica. No tuve tiempo de investigarlo a fondo... Lo he dejado en una rama feature/bindings
          */
         val tvName: TextView = view.findViewById(R.id.tv_item_name)
         val tvLastName: TextView = view.findViewById(R.id.tv_item_lastname)
