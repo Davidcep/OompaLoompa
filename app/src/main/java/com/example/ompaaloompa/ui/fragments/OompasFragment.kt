@@ -2,16 +2,15 @@ package com.example.ompaaloompa.ui.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.ompaaloompa.R
-import com.example.ompaaloompa.data.models.Oompa
+import com.example.ompaaloompa.databinding.FragmentOompasBinding
 import com.example.ompaaloompa.utils.OompaAdapter
 import com.example.ompaaloompa.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,26 +18,21 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OompasFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = OompasFragment()
-    }
+    private val viewModel: OompasViewModel by viewModels()
+    private lateinit var binding: FragmentOompasBinding
 
-    private lateinit var viewModel: OompasViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var editTextSearch: EditText
-    private lateinit var adapter: OompaAdapter
+    private val adapter = OompaAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_oompas, container, false)
+        binding = FragmentOompasBinding.inflate(inflater, container, false)
+        binding.rvMainOompas.adapter = adapter
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel = ViewModelProvider(this).get(OompasViewModel::class.java)
-        recyclerView = view.findViewById(R.id.rv_main_oompas)
-        editTextSearch = view.findViewById(R.id.et_main_search)
         bindViews()
     }
 
@@ -48,14 +42,11 @@ class OompasFragment : Fragment() {
     }
 
     private fun bindAdapters(){
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = OompaAdapter()
-        recyclerView.adapter = adapter
         bindData()
     }
 
     private fun bindEditText() {
-        editTextSearch.doAfterTextChanged { it ->
+        binding.etMainSearch.doAfterTextChanged { it ->
             if(it.toString() == ""){
                 bindData()
             } else {
@@ -93,8 +84,8 @@ class OompasFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorite -> {
-                if(editTextSearch.visibility == View.VISIBLE) editTextSearch.visibility = View.GONE
-                else editTextSearch.visibility = View.VISIBLE
+                if(binding.etMainSearch.visibility == View.VISIBLE) binding.etMainSearch.visibility = View.GONE
+                else binding.etMainSearch.visibility = View.VISIBLE
                 true
             }
             else -> super.onOptionsItemSelected(item)
